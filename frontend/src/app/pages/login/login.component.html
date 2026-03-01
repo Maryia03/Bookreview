@@ -1,0 +1,34 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>{{ isRegister ? 'Registration' : 'Login' }}</h2>
+    <input
+      *ngIf="isRegister"
+      type="text"
+      placeholder="Никнейм"
+      [(ngModel)]="username"
+    />
+
+    <input
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="email"
+    />
+
+    <input
+      type="password"
+      placeholder="Пароль"
+      [(ngModel)]="password"
+    />
+
+    <button (click)="submit()">
+      {{ isRegister ? 'Sign up' : 'Log in' }}
+    </button>
+
+    <p class="switch" (click)="toggleMode()">
+      {{ isRegister ? 'Already have an account? Log in' : 'Don't have an account? Sign up' }}
+    </p>
+    <div class="error" *ngIf="error">
+      {{ error }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="home-container">
+  <h1 class="title">📚 Book Review</h1>
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Search by title or author..."
+      [(ngModel)]="search"
+    />
+    <button (click)="onSearch()">Search</button>
+  </div>
+
+  <div class="books-grid">
+    <div class="book-card" *ngFor="let book of books" [routerLink]="['/book', book.id]">
+      <img [src]="book.coverUrl || 'assets/no-cover.png'" />
+      <h3>{{ book.title }}</h3>
+      <p class="author">{{ book.author }}</p>
+      <div class="rating">
+        ⭐ {{ book.averageRating }} ({{ book.ratingsCount }})
+      </div>
+    </div>
+  </div>
+</div>

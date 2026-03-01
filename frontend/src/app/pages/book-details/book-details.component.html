@@ -1,0 +1,40 @@
+<div *ngIf="book">
+
+  <!-- КНИГА -->
+  <div class="book-header">
+    <img [src]="book.coverUrl" width="150" />
+    <h1>{{ book.title }}</h1>
+    <h3>{{ book.author }}</h3>
+
+    <!-- Рейтинг -->
+    <div class="rating">
+      ⭐ {{ book.averageRating }} / 10 ({{ book.ratingsCount }} ratings)
+    </div>
+
+    <p>{{ book.description }}</p>
+  </div>
+
+  <hr>
+
+  <!-- СОРТИРОВКА -->
+  <div>
+    <button (click)="changeSort('new')">New</button>
+    <button (click)="changeSort('top')">Top</button>
+  </div>
+
+  <!-- КОММЕНТАРИИ -->
+  <h2>Comments</h2>
+
+  <div *ngFor="let comment of comments" class="comment">
+    <strong>{{ comment.username }}</strong>
+    <p>{{ comment.content }}</p>
+    👍 {{ comment.likesCount }} 👎 {{ comment.dislikesCount }}
+    <hr>
+  </div>
+
+  <!-- ПАГИНАЦИЯ -->
+  <button (click)="loadMore()" *ngIf="page < book.totalPages - 1">
+    Load more
+  </button>
+
+</div>

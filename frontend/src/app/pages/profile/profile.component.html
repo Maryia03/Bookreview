@@ -1,0 +1,28 @@
+<div class="profile-container" *ngIf="user">
+  <div class="profile-card">
+    <img class="avatar" [src]="user.avatarUrl || 'assets/default-avatar.png'" />
+    <h2>{{ user.username }}</h2>
+    <p>{{ user.email }}</p>
+    <div *ngIf="user.blocked" class="blocked">
+      🚫 Your account has been blocked
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>⭐ Rated books</h3>
+    <div class="list">
+      <div *ngFor="let book of ratedBooks" class="item">
+        {{ book.title }} — {{ book.rating }}/10
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>💬 Your comments</h3>
+    <div class="list">
+      <div *ngFor="let comment of comments" class="item">
+        "{{ comment.content }}"
+      </div>
+    </div>
+  </div>
+</div>
