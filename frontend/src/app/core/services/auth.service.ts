@@ -11,6 +11,17 @@ export class AuthService{
   private TOKEN_KEY = 'jwt_token';
   constructor(private http: HttpClient) {}
 
+  getUserRole(): string | null{
+  const token = this.getToken();
+  if (!token) return null;
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  return payload.role;
+  }
+
+   isAdmin(): boolean{
+  return this.getUserRole() === 'ROLE_ADMIN';
+  }
+
   register(username: string, email: string, password: string){
       return this.http.post(`${this.api}/register`,{
         username,

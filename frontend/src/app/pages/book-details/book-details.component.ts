@@ -9,7 +9,7 @@ import { BookDetails, CommentDTO } from '../../core/models/book-details.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './book-details.component.html',
-  styleUrl: './book-details.component.scss',
+  styleUrls: ['./book-details.component.scss']
 })
 
 export class BookDetailsComponent implements OnInit{

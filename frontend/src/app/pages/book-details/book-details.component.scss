@@ -1,0 +1,129 @@
+:host {
+  display: block;
+  max-width: 800px;
+  margin: 2rem auto;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.book-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  img {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #1a1a1a;
+  }
+
+  h3 {
+    margin: 0.2rem 0 1rem 0;
+    font-weight: 400;
+    color: #555;
+  }
+
+  p {
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+
+  .rating {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #ffb400; // золотой для звезд
+  }
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 1.5rem 0;
+}
+
+button {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
+.comment {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+
+  strong {
+    color: #007bff;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0.3rem 0;
+  }
+
+  hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+}
+
+.rating {
+  font-size: 1.5rem;
+  color: #ddd; // пустые звезды
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+
+  span {
+    cursor: default;
+    transition: color 0.2s;
+
+    &.filled {
+      color: #ffb400; // золотой для заполненных звезд
+    }
+  }
+
+  .count {
+    font-size: 1rem;
+    color: #555;
+    margin-left: 0.5rem;
+  }
+}
+
+/* Pagination */
+button[ng-reflect-ng-if] {
+  display: block;
+  margin: 1rem auto 0 auto;
+  background-color: #28a745;
+
+  &:hover {
+    background-color: #1e7e34;
+  }
+}
+
+/* Sor*/
+div > button {
+  background-color: #6c757d;
+
+  &:hover {
+    background-color: #5a6268;
+  }
+}
