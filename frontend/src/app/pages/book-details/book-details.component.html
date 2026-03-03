@@ -1,21 +1,24 @@
 <ng-container *ngIf="book; else loadingTemplate">
   <div class="bookdetails-container">
-    <!-- КНИГА -->
+    <!-- Book Header -->
     <div class="book-header">
-      <img
-        [src]="book.coverUrl || 'assets/no-cover.png'"
-        width="150"
-        alt="Book Cover"
-      />
+      <img [src]="book.coverUrl || 'assets/no-cover.png'" width="150" alt="Cover"/>
       <h1>{{ book.title }}</h1>
       <h3>{{ book.author }}</h3>
 
-      <!-- Рейтинг -->
+      <!-- Rating с шагом 0.5 -->
       <div class="rating">
-        <ng-container *ngFor="let star of [1,2,3,4,5,6,7,8,9,10]; let i = index">
-          <span [class.filled]="i < book.averageRating">★</span>
+        <ng-container *ngFor="let i of fullStars">
+    <span class="star"
+          (click)="submitHalfOrFullRating($event, i)"
+          [class.filled]="userRating >= i"
+          [class.half]="userRating + 0.5 === i">
+      ★
+    </span>
         </ng-container>
-        <span class="count">({{ book.ratingsCount }} ratings)</span>
+        <span class="count">
+    {{ book.averageRating.toFixed(1) }} / 10 ({{ book.ratingsCount }} ratings)
+  </span>
       </div>
 
       <p>{{ book.description }}</p>
@@ -23,24 +26,34 @@
 
     <hr />
 
-    <!-- КОММЕНТАРИИ -->
-    <h2>Comments</h2>
+    <!-- Comments Section -->
+    <div class="comment-actions">
+      <input type="text" [(ngModel)]="newComment" placeholder="Write a comment..." />
+      <button (click)="submitComment()">Post</button>
+      <span>Sort by:</span>
+      <button (click)="changeSort('new')" [disabled]="sortBy === 'new'">New</button>
+      <button (click)="changeSort('top')" [disabled]="sortBy === 'top'">Top</button>
+    </div>
+
     <div *ngFor="let comment of comments" class="comment">
       <strong>{{ comment.username }}</strong>
       <p>{{ comment.content }}</p>
-      👍 {{ comment.likesCount }} 👎 {{ comment.dislikesCount }}
-      <hr />
+      <div class="reactions">
+        <span (click)="likeComment(comment)" [class.active]="comment.userReaction === 'like'">
+          👍 {{ comment.likesCount }}
+        </span>
+        <span (click)="dislikeComment(comment)" [class.active]="comment.userReaction === 'dislike'">
+          👎 {{ comment.dislikesCount }}
+        </span>
+      </div>
     </div>
 
-    <!-- ПАГИНАЦИЯ -->
-    <button (click)="loadMore()" *ngIf="book.totalPages > 1 && page < book.totalPages - 1">
+    <button *ngIf="book.totalPages > 1 && page < book.totalPages - 1" (click)="loadMore()">
       Load more
     </button>
   </div>
 </ng-container>
 
 <ng-template #loadingTemplate>
-  <div class="loading">
-    Loading book details...
-  </div>
+  <div class="loading">Loading book details...</div>
 </ng-template>
