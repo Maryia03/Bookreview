@@ -13,15 +13,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AdminController{
     private final UserService userService;
     private final CommentService commentService;
     private final BookService bookService;
+
+    @GetMapping("/books")
+    public ResponseEntity<List<BookDTO>> getAllBooks() {
+        return ResponseEntity.ok(bookService.getAllBooks());
+    }
 
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers(){
@@ -34,9 +40,9 @@ public class AdminController{
     }
 
     @DeleteMapping("/books/{id}")
-    public ResponseEntity<?> deleteBook(@PathVariable Long id){
+    public ResponseEntity<Map<String, String>> deleteBook(@PathVariable Long id){
         bookService.deleteBook(id);
-        return ResponseEntity.ok("Book deleted successfully");
+        return ResponseEntity.ok(Map.of("message", "Book deleted successfully"));
     }
 
     @PutMapping("/books/{id}")
@@ -51,14 +57,16 @@ public class AdminController{
     }
 
     @PutMapping("/users/{id}/block")
-    public ResponseEntity<?> blockUser(@PathVariable Long id){
+    public ResponseEntity<Map<String, Boolean>> blockUser(@PathVariable Long id){
         userService.blockUser(id);
-        return ResponseEntity.ok("User blocked successfully");
+        Map<String, Boolean> response = Map.of("blocked", true);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/users/{id}/unblock")
-    public ResponseEntity<?> unblockUser(@PathVariable Long id){
+    public ResponseEntity<Map<String, Boolean>> unblockUser(@PathVariable Long id){
         userService.unblockUser(id);
-        return ResponseEntity.ok("User unblocked successfully");
+        Map<String, Boolean> response = Map.of("blocked", false);
+        return ResponseEntity.ok(response);
     }
 }
