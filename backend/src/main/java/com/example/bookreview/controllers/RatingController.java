@@ -10,6 +10,8 @@ import com.example.bookreview.security.SecurityUtils;
 import com.example.bookreview.services.RatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +26,9 @@ public class RatingController{
     public ResponseEntity<RatingDTO> rateBook(@PathVariable Long bookId, @RequestBody RatingRequest request){
         String email = SecurityUtils.getCurrentUserEmail();
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        if (user.isBlocked()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Blocked users cannot rate books");
+        }
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
         RatingDTO response = ratingService.rateBook(user, book, request.getScore());
         return ResponseEntity.ok(response);

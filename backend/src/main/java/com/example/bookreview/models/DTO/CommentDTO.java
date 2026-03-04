@@ -11,6 +11,7 @@ import java.time.LocalDate;
 public class CommentDTO{
     private Long id;
     private String content;
+    private Long userId;
     private LocalDate createdDate;
     private String username;
     private String avatarUrl;

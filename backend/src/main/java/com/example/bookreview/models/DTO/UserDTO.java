@@ -1,6 +1,7 @@
 package com.example.bookreview.models.DTO;
 
 import lombok.*;
+import java.util.List;
 import java.time.LocalDate;
 
 @Getter
@@ -14,5 +15,7 @@ public class UserDTO{
     private String email;
     private String avatarUrl;
     private LocalDate createdAt;
-    private boolean blocked;
+    private Boolean blocked;
+    private List<RatingDTO> ratings;
+    private List<CommentDTO> comments;
 }

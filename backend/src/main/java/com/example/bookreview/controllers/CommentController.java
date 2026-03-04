@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 import java.util.List;
 
 @RestController
@@ -41,6 +43,9 @@ public class CommentController{
     @PostMapping("/books/{bookId}/comments")
     public CommentDTO addComment(@PathVariable Long bookId, @RequestBody CommentRequest request){
         User user = userService.getByEmail(SecurityUtils.getCurrentUserEmail());
+        if (user.isBlocked()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Blocked users cannot add comments");
+        }
         Book book = bookService.getBookEntityById(bookId);
         return commentService.addComment(user, book, request.getContent());
     }
@@ -49,6 +54,9 @@ public class CommentController{
     public ResponseEntity<Void> deleteOwnComment(@PathVariable Long id){
         String email = SecurityUtils.getCurrentUserEmail();
         User user = userService.getByEmail(email);
+        if (user.isBlocked()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Blocked users cannot delete comments");
+        }
         commentService.deleteOwnComment(id, user);
         return ResponseEntity.noContent().build();
     }
@@ -56,6 +64,9 @@ public class CommentController{
     @PostMapping("/comments/{commentId}/like")
     public CommentDTO likeComment(@PathVariable Long commentId){
         User user = userService.getByEmail(SecurityUtils.getCurrentUserEmail());
+        if (user.isBlocked()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Blocked users cannot react to comments");
+        }
         Comment comment = commentService.getById(commentId);
         reactionService.reactToComment(user, comment, 1);
         return commentService.mapToDTO(comment, user);
@@ -64,6 +75,9 @@ public class CommentController{
     @PostMapping("/comments/{commentId}/dislike")
     public CommentDTO dislikeComment(@PathVariable Long commentId){
         User user = userService.getByEmail(SecurityUtils.getCurrentUserEmail());
+        if (user.isBlocked()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Blocked users cannot react to comments");
+        }
         Comment comment = commentService.getById(commentId);
         reactionService.reactToComment(user, comment, -1);
         return commentService.mapToDTO(comment, user);

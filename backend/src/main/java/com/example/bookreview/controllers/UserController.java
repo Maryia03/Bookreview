@@ -9,6 +9,8 @@ import com.example.bookreview.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 import java.util.List;
 
 @RestController
@@ -18,39 +20,40 @@ public class UserController{
     private final UserService userService;
 
     @GetMapping("/me")
-    public ResponseEntity<UserDTO> getCurrentUser(){
+    public ResponseEntity<UserDTO> getCurrentUser() {
         String email = SecurityUtils.getCurrentUserEmail();
-        if (email == null){
-            return ResponseEntity.status(401).build();
-        }
+        if (email == null) return ResponseEntity.status(401).build();
         UserDTO dto = userService.getCurrentUser(email);
         return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/me")
-    public ResponseEntity<UserDTO> updateProfile(@RequestBody UserDTO request){
+    public ResponseEntity<UserDTO> updateProfile(@RequestBody UserDTO request) {
         String email = SecurityUtils.getCurrentUserEmail();
+        User user = userService.getByEmail(email);
+        if (user.isBlocked()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Blocked users cannot update profile");
+        }
         User updated = userService.updateProfile(email, request);
-        UserDTO dto = UserDTO.builder()
-                .id(updated.getId())
-                .username(updated.getUsername())
-                .email(updated.getEmail())
-                .avatarUrl(updated.getAvatarUrl())
-                .createdAt(updated.getCreatedAt())
-                .build();
-
+        UserDTO dto = userService.mapToDTO(updated); // используй метод mapToDTO из UserService
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/ratings")
-    public ResponseEntity<List<RatingDTO>> getUserRatings(){
+    public ResponseEntity<List<RatingDTO>> getUserRatings() {
         String email = SecurityUtils.getCurrentUserEmail();
         return ResponseEntity.ok(userService.getUserRatings(email));
     }
 
     @GetMapping("/comments")
-    public ResponseEntity<List<CommentDTO>> getUserComments(){
+    public ResponseEntity<List<CommentDTO>> getUserComments() {
         String email = SecurityUtils.getCurrentUserEmail();
         return ResponseEntity.ok(userService.getUserComments(email));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        UserDTO dto = userService.getPublicUserDTO(id);
+        return ResponseEntity.ok(dto);
     }
 }

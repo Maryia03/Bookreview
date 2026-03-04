@@ -6,12 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="bdc50762-597e-4c2e-9442-801adf1ab858" name="Changes" comment="Initial commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/controllers/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/controllers/RatingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/controllers/RatingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/models/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/models/Comment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/models/DTO/CommentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/models/DTO/CommentDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/models/DTO/RatingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/models/DTO/RatingDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/models/DTO/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/models/DTO/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/security/CustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/security/CustomUserDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/services/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/services/CommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/services/RatingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/services/RatingService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/services/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -75,6 +78,7 @@
       <recent name="D:\bookreview\backend\src\main\java\com\example\bookreview\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\bookreview\frontend\src\app\pages" />
       <recent name="D:\bookreview\frontend\src\app\core\services" />
       <recent name="D:\bookreview\backend\src\main\java\com\example\bookreview\security" />
       <recent name="D:\bookreview\backend\src\main\java\com\example\bookreview\models\DTO" />
@@ -141,7 +145,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772571239909</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Initial commit">
+      <option name="closed" value="true" />
+      <created>1772637671012</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1772637671012</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,15 +188,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
           <line>13</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/backend/src/main/java/com/example/bookreview/repositories/UserRepository.java</url>
-          <line>10</line>
-          <properties class="com.example.bookreview.repositories.UserRepository" method="existsByEmail">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

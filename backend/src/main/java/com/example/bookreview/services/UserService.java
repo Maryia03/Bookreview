@@ -7,6 +7,7 @@ import com.example.bookreview.models.DTO.RatingDTO;
 import com.example.bookreview.repositories.UserRepository;
 import com.example.bookreview.repositories.CommentRepository;
 import com.example.bookreview.repositories.RatingRepository;
+import com.example.bookreview.services.CommentService;
 import lombok.RequiredArgsConstructor;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class UserService{
     private final UserRepository userRepository;
     private final RatingRepository ratingRepository;
     private final CommentRepository commentRepository;
+    private final CommentService commentService;
 
     public User getByEmail(String email){
         return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
@@ -31,6 +33,7 @@ public class UserService{
                 .email(user.getEmail())
                 .avatarUrl(user.getAvatarUrl())
                 .createdAt(user.getCreatedAt())
+                .blocked(user.isBlocked())
                 .build();
     }
 
@@ -64,8 +67,7 @@ public class UserService{
         return userRepository.save(user);
     }
 
-    public List<RatingDTO> getUserRatings(String email){
-        User user = getByEmail(email);
+    private List<RatingDTO> getRatingsForUser(User user){
         return ratingRepository.findByUser(user)
                 .stream()
                 .map(r -> RatingDTO.builder()
@@ -78,23 +80,22 @@ public class UserService{
                 .collect(Collectors.toList());
     }
 
-    public List<CommentDTO> getUserComments(String email){
-        User user = getByEmail(email);
+    private List<CommentDTO> getCommentsForUser(User user){
         return commentRepository.findByUser(user)
                 .stream()
                 .map(c -> {
                     long likes = c.getReactions().stream().filter(r -> r.getValue() == 1).count();
                     long dislikes = c.getReactions().stream().filter(r -> r.getValue() == -1).count();
-                    String userReaction = null;
                     return CommentDTO.builder()
                             .id(c.getId())
                             .content(c.getContent())
                             .createdDate(c.getCreatedDate())
+                            .userId(c.getUser().getId())
                             .username(c.getUser().getUsername())
                             .avatarUrl(c.getUser().getAvatarUrl())
                             .likesCount(likes)
                             .dislikesCount(dislikes)
-                            .userReaction(userReaction)
+                            .userReaction(null)
                             .bookId(c.getBook().getId())
                             .bookTitle(c.getBook().getTitle())
                             .build();
@@ -102,13 +103,52 @@ public class UserService{
                 .collect(Collectors.toList());
     }
 
-    private UserDTO mapToDTO(User user) {
+    public UserDTO mapToDTO(User user){
         return UserDTO.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .avatarUrl(user.getAvatarUrl())
                 .createdAt(user.getCreatedAt())
+                .blocked(user.isBlocked())
+                .ratings(getRatingsForUser(user))
+                .comments(getCommentsForUser(user))
+                .build();
+    }
+
+    public List<RatingDTO> getUserRatings(String email){
+        User user = getByEmail(email);
+        return getRatingsForUser(user);
+    }
+
+    public List<CommentDTO> getUserComments(String email){
+        User user = getByEmail(email);
+        return getCommentsForUser(user);
+    }
+
+    public UserDTO getPublicUserDTO(Long id){
+        User user = getById(id);
+        List<RatingDTO> ratings = ratingRepository.findByUser(user)
+                .stream()
+                .map(r -> RatingDTO.builder()
+                        .id(r.getId())
+                        .value(r.getScore())
+                        .bookId(r.getBook().getId())
+                        .bookTitle(r.getBook().getTitle())
+                        .username(user.getUsername())
+                        .build())
+                .toList();
+        List<CommentDTO> comments = commentRepository.findByUser(user)
+                .stream()
+                .map(c -> commentService.mapToDTO(c, null))
+                .toList();
+
+        return UserDTO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .avatarUrl(user.getAvatarUrl())
+                .ratings(ratings)
+                .comments(comments)
                 .build();
     }
 }
