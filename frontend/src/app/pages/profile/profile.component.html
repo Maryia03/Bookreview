@@ -3,6 +3,9 @@
     <img class="avatar" [src]="user.avatarUrl || 'assets/default-avatar.png'" />
     <h2>{{ user.username }}</h2>
     <p>{{ user.email }}</p>
+    <button class="edit-btn" (click)="editing = true">
+      ✏️ Edit profile
+    </button>
     <div *ngIf="user.blocked" class="blocked">
       🚫 Your account has been blocked
     </div>
@@ -24,7 +27,7 @@
       <a [routerLink]="['/book', rating.bookId]">
         {{ rating.bookTitle }}
       </a>
-      — {{ rating.value }}/10
+       {{ rating.value }}/10
     </div>
   </div>
 

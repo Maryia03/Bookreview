@@ -1,0 +1,22 @@
+<div *ngIf="user">
+  <div class="profile-card">
+    <img class="avatar" [src]="user.avatarUrl || 'assets/default-avatar.png'" />
+    <h2>{{ user.username }}</h2>
+  </div>
+
+  <div class="section">
+    <h3>⭐ Rated books</h3>
+    <div *ngFor="let rating of user.ratings" class="item">
+      <a [routerLink]="['/book', rating.bookId]">{{ rating.bookTitle }}</a>
+        {{ rating.value }}/10
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>💬 Comments</h3>
+    <div *ngFor="let comment of user.comments" class="item">
+      <a [routerLink]="['/book', comment.bookId]">{{ comment.bookTitle }}</a>
+      <p>"{{ comment.content }}"</p>
+    </div>
+  </div>
+</div>

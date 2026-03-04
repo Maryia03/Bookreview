@@ -1,19 +1,23 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BookService, BookDetails, CommentDTO } from '../../core/services/book.service';
+import { UserService, User} from '../../core/services/user.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.scss']
 })
+
 export class BookDetailsComponent implements OnInit {
   book: BookDetails | null = null;
   comments: CommentDTO[] = [];
+  user: User | null = null;
   page = 0;
   sortBy = 'new';
   loading = false;
@@ -49,13 +53,20 @@ submitHalfOrFullRating(event: MouseEvent, starNumber: number): void{
   return steps;
   }
 
-  constructor(private route: ActivatedRoute, private bookService: BookService, private cdr: ChangeDetectorRef) {}
+  constructor(private route: ActivatedRoute, private bookService: BookService, private userService: UserService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!id) return;
-    this.loadBook(id);
-  }
+        if (!id) return;
+        this.loadBook(id);
+        this.userService.getCurrentUser().subscribe({
+          next: u => {
+            this.user = u;
+            this.cdr.detectChanges();
+          },
+          error: err => console.error('Failed to load user', err)
+        });
+      }
 
   loadBook(id: number): void {
     this.bookService.getBookDetails(id, this.sortBy).subscribe({

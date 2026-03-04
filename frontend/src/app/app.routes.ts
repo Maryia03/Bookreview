@@ -4,11 +4,13 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { LoginComponent } from './pages/login/login.component';
+import { OtherProfileComponent } from './pages/other-profile/other-profile.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'book/:id', component: BookDetailsComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'admin', component: AdminComponent }
+  { path: 'admin', component: AdminComponent },
+  { path: 'user/:id', component: OtherProfileComponent }
 ];

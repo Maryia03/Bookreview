@@ -1,6 +1,7 @@
 export interface CommentDTO{
   id: number;
   content: string;
+  userId: number;
   createdDate: string;
   username: string;
   avatarUrl: string;

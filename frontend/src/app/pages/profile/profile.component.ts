@@ -25,9 +25,17 @@ export class ProfileComponent implements OnInit{
     this.userService.updateProfile({
       username: this.user.username,
       avatarUrl: this.user.avatarUrl
-    }).subscribe(updated => {
-      this.user = updated;
-      this.editing = false;
+    }).subscribe({
+      next: updated => {
+        this.user = updated;
+        this.editing = false;
+        this.cdr.detectChanges();
+        alert('Profile updated successfully ✅');
+      },
+      error: err => {
+        console.error(err);
+        alert('Failed to update profile ❌');
+      }
     });
   }
 
@@ -35,7 +43,7 @@ export class ProfileComponent implements OnInit{
     this.loadProfile();
   }
 
-  deleteComment(id: number){
+  deleteComment(id: number) {
     this.userService.deleteComment(id).subscribe(() => {
       this.comments = this.comments.filter(c => c.id !== id);
     });

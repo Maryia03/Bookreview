@@ -38,9 +38,11 @@ export class AdminComponent implements OnInit {
       this.cdr.detectChanges();
     });
     this.adminService.getAllUsers().subscribe(data =>{
-      this.users = data;
-      this.cdr.detectChanges();
-    });
+      this.users = data.map(u => ({
+            ...u, blocked: u.blocked ?? false
+          }));
+          this.cdr.detectChanges();
+        });
   }
 
   // Books
@@ -67,12 +69,12 @@ export class AdminComponent implements OnInit {
   toggleBlockUser(user: any){
     if (user.blocked) {
       this.adminService.unblockUser(user.id).subscribe(res =>{
-        this.users = this.users.map(u => u.id === user.id ? { ...u, blocked: res.blocked } : u);
+        user.blocked = res.blocked; // изменяем только локально
         this.cdr.detectChanges();
       });
-    }else{
+    } else {
       this.adminService.blockUser(user.id).subscribe(res =>{
-        this.users = this.users.map(u => u.id === user.id ? { ...u, blocked: res.blocked } : u);
+        user.blocked = res.blocked; // изменяем только локально
         this.cdr.detectChanges();
       });
     }

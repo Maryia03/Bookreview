@@ -1,18 +1,15 @@
 <ng-container *ngIf="book; else loadingTemplate">
   <div class="bookdetails-container">
-    <!-- Book Header -->
     <div class="book-header">
       <img [src]="book.coverUrl || 'assets/no-cover.png'" width="150" alt="Cover"/>
       <h1>{{ book.title }}</h1>
       <h3>{{ book.author }}</h3>
-
-      <!-- Rating с шагом 0.5 -->
       <div class="rating">
         <ng-container *ngFor="let i of fullStars">
     <span class="star"
-          (click)="submitHalfOrFullRating($event, i)"
           [class.filled]="userRating >= i"
-          [class.half]="userRating + 0.5 === i">
+          [class.half]="userRating + 0.5 === i"
+          (click)="!user?.blocked && submitHalfOrFullRating($event, i)">
       ★
     </span>
         </ng-container>
@@ -20,29 +17,31 @@
     {{ book.averageRating.toFixed(1) }} / 10 ({{ book.ratingsCount }} ratings)
   </span>
       </div>
-
       <p>{{ book.description }}</p>
     </div>
 
     <hr />
-
-    <!-- Comments Section -->
     <div class="comment-actions">
+      <div *ngIf="!user?.blocked">
       <input type="text" [(ngModel)]="newComment" placeholder="Write a comment..." />
       <button (click)="submitComment()">Post</button>
+      </div>
       <span>Sort by:</span>
       <button (click)="changeSort('new')" [disabled]="sortBy === 'new'">New</button>
       <button (click)="changeSort('top')" [disabled]="sortBy === 'top'">Top</button>
     </div>
 
     <div *ngFor="let comment of comments" class="comment">
-      <strong>{{ comment.username }}</strong>
+      <strong>
+        <a [routerLink]="['/user', comment.userId]">{{ comment.username }}</a>
+      </strong>
       <p>{{ comment.content }}</p>
+
       <div class="reactions">
-        <span (click)="likeComment(comment)" [class.active]="comment.userReaction === 'like'">
+        <span [class.active]="comment.userReaction === 'like'" (click)="!user?.blocked && likeComment(comment)">
           👍 {{ comment.likesCount }}
         </span>
-        <span (click)="dislikeComment(comment)" [class.active]="comment.userReaction === 'dislike'">
+        <span [class.active]="comment.userReaction === 'dislike'" (click)="!user?.blocked && dislikeComment(comment)">
           👎 {{ comment.dislikesCount }}
         </span>
       </div>

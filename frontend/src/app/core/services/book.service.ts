@@ -4,25 +4,35 @@ import { Observable } from 'rxjs';
 
 export interface CommentDTO {
   id: number;
-  username: string;
-  content: string;
-  likesCount: number;
-  dislikesCount: number;
-  userReaction: string | null;
+    username: string;
+    content: string;
+    userId: number;
+    likesCount: number;
+    dislikesCount: number;
+    userReaction: string | null;
+    bookId: number;
+    bookTitle: string;
 }
 
-export interface BookDetails {
+export interface BookDetails{
   id: number;
   title: string;
   author: string;
   description: string;
-   coverUrl: string | null;
+  coverUrl: string | null;
   averageRating: number;
   ratingsCount: number;
   userRating: number | null;
   comments: CommentDTO[];
   totalPages: number;
   currentPage: number;
+}
+
+export interface RatingDTO{
+  id: number;
+  bookId: number;
+  bookTitle: string;
+  value: number;
 }
 
 @Injectable({ providedIn: 'root' })
