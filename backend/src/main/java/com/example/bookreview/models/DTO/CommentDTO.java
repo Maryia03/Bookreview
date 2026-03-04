@@ -17,4 +17,6 @@ public class CommentDTO{
     private long likesCount;
     private long dislikesCount;
     private String userReaction;
+    private Long bookId;
+    private String bookTitle;
 }

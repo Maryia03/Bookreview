@@ -52,7 +52,7 @@ public class AdminController{
 
     @DeleteMapping("/comments/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long id){
-        commentService.deleteComment(id);
+        commentService.deleteCommentAsAdmin(id);
         return ResponseEntity.noContent().build();
     }
 

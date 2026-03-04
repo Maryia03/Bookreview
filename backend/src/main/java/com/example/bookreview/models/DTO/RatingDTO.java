@@ -12,4 +12,6 @@ public class RatingDTO{
     private Long id;
     private BigDecimal value;
     private String username;
+    private Long bookId;
+    private String bookTitle;
 }

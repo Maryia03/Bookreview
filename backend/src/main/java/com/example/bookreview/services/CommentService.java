@@ -58,8 +58,16 @@ public class CommentService{
                 .build();
     }
 
-    public void deleteComment(Long commentId){
-        if (!commentRepository.existsById(commentId)) {
+    public void deleteOwnComment(Long commentId, User currentUser){
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new RuntimeException("Comment not found"));
+        if (!comment.getUser().getId().equals(currentUser.getId())){
+            throw new RuntimeException("You can delete only your own comments");
+        }
+        commentRepository.delete(comment);
+    }
+    public void deleteCommentAsAdmin(Long commentId){
+        if (!commentRepository.existsById(commentId)){
             throw new RuntimeException("Comment not found");
         }
         commentRepository.deleteById(commentId);
@@ -103,6 +111,8 @@ public class CommentService{
                 .createdDate(comment.getCreatedDate())
                 .username(comment.getUser().getUsername())
                 .avatarUrl(comment.getUser().getAvatarUrl())
+                .bookId(comment.getBook().getId())
+                .bookTitle(comment.getBook().getTitle())
                 .likesCount(likes)
                 .dislikesCount(dislikes)
                 .userReaction(userReaction)

@@ -31,6 +31,8 @@ public class RatingService{
                 .id(rating.getId())
                 .value(rating.getScore())
                 .username(user.getUsername())
+                .bookId(rating.getBook().getId())
+                .bookTitle(rating.getBook().getTitle())
                 .build();
     }
 

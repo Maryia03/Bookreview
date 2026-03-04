@@ -45,6 +45,14 @@ public class CommentController{
         return commentService.addComment(user, book, request.getContent());
     }
 
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<Void> deleteOwnComment(@PathVariable Long id){
+        String email = SecurityUtils.getCurrentUserEmail();
+        User user = userService.getByEmail(email);
+        commentService.deleteOwnComment(id, user);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/comments/{commentId}/like")
     public CommentDTO likeComment(@PathVariable Long commentId){
         User user = userService.getByEmail(SecurityUtils.getCurrentUserEmail());

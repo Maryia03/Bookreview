@@ -72,6 +72,8 @@ public class UserService{
                         .id(r.getId())
                         .value(r.getScore())
                         .username(user.getUsername())
+                        .bookId(r.getBook().getId())
+                        .bookTitle(r.getBook().getTitle())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -93,6 +95,8 @@ public class UserService{
                             .likesCount(likes)
                             .dislikesCount(dislikes)
                             .userReaction(userReaction)
+                            .bookId(c.getBook().getId())
+                            .bookTitle(c.getBook().getTitle())
                             .build();
                 })
                 .collect(Collectors.toList());
