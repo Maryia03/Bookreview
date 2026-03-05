@@ -6,10 +6,13 @@
     <button class="edit-btn" (click)="editing = true">
       ✏️ Edit profile
     </button>
+    <button class="delete-btn" (click)="deleteAccount()">
+      🗑️ Delete my account
+    </button>
     <div *ngIf="user.blocked" class="blocked">
       🚫 Your account has been blocked
     </div>
-  </div>
+    </div>
 
   <div *ngIf="editing" class="edit-form">
     <input [(ngModel)]="user.username" placeholder="Username" />

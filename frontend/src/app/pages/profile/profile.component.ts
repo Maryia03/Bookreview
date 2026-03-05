@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../core/services/user.service';
 import { RouterModule } from '@angular/router';
+import { AuthService} from '../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
 
 
@@ -19,7 +20,7 @@ export class ProfileComponent implements OnInit{
   comments: any[] = [];
   editing = false;
 
-  constructor(private userService: UserService, private cdr: ChangeDetectorRef) {}
+  constructor(private userService: UserService, private authService: AuthService,private cdr: ChangeDetectorRef) {}
 
   saveProfile(){
     this.userService.updateProfile({
@@ -30,11 +31,11 @@ export class ProfileComponent implements OnInit{
         this.user = updated;
         this.editing = false;
         this.cdr.detectChanges();
-        alert('Profile updated successfully ✅');
+        alert('Profile updated successfully');
       },
       error: err => {
         console.error(err);
-        alert('Failed to update profile ❌');
+        alert('Failed to update profile');
       }
     });
   }
@@ -46,6 +47,7 @@ export class ProfileComponent implements OnInit{
   deleteComment(id: number) {
     this.userService.deleteComment(id).subscribe(() => {
       this.comments = this.comments.filter(c => c.id !== id);
+      this.cdr.detectChanges();
     });
   }
 
@@ -68,4 +70,20 @@ export class ProfileComponent implements OnInit{
         this.cdr.detectChanges();
       });
     }
+
+  deleteAccount(){
+    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')){
+      this.userService.deleteCurrentUser().subscribe({
+        next: () => {
+          alert('Account deleted successfully');
+          this.authService.logout();
+          window.location.href = '/login';
+        },
+        error: err => {
+          console.error(err);
+          alert('Failed to delete account');
+        }
+      });
+    }
+  }
   }

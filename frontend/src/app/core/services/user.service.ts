@@ -50,4 +50,7 @@ export class UserService{
   getUserById(id: number){
     return this.http.get<UserDTO>(`${this.api}/${id}`);
   }
+  deleteCurrentUser(){
+    return this.http.delete(`${this.api}/me`);
+  }
 }
