@@ -4,6 +4,8 @@ import com.example.bookreview.models.Rating;
 import com.example.bookreview.models.Book;
 import com.example.bookreview.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
@@ -18,4 +20,5 @@ public interface RatingRepository extends JpaRepository<Rating, Long>{
     BigDecimal findAverageScoreByBook(@Param("book") Book book);
     @Query("SELECT COUNT(r) FROM Rating r WHERE r.book = :book")
     Long countByBook(@Param("book") Book book);
+    @Modifying @Transactional void deleteAllByUser(User user);
 }

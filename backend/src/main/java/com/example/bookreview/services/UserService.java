@@ -6,8 +6,10 @@ import com.example.bookreview.models.DTO.CommentDTO;
 import com.example.bookreview.models.DTO.RatingDTO;
 import com.example.bookreview.repositories.UserRepository;
 import com.example.bookreview.repositories.CommentRepository;
+import com.example.bookreview.repositories.CommentReactionRepository;
 import com.example.bookreview.repositories.RatingRepository;
 import com.example.bookreview.services.CommentService;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class UserService{
     private final RatingRepository ratingRepository;
     private final CommentRepository commentRepository;
     private final CommentService commentService;
+    private final CommentReactionRepository commentReactionRepository;
 
     public User getByEmail(String email){
         return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
@@ -43,6 +46,15 @@ public class UserService{
                 .stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteUserByEmail(String email){
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        commentReactionRepository.deleteAllByUser(user);
+        ratingRepository.deleteAllByUser(user);
+        commentRepository.deleteAllByUser(user);
+        userRepository.delete(user);
     }
 
     public User getById(Long id){

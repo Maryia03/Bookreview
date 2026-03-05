@@ -39,6 +39,14 @@ public class UserController{
         return ResponseEntity.ok(dto);
     }
 
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteCurrentUser(){
+        String email = SecurityUtils.getCurrentUserEmail();
+        if (email == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        userService.deleteUserByEmail(email);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/ratings")
     public ResponseEntity<List<RatingDTO>> getUserRatings() {
         String email = SecurityUtils.getCurrentUserEmail();
