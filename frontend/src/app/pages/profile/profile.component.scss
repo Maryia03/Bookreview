@@ -118,8 +118,8 @@
     }
 
     .item {
-        display: flex; /* ставим flex, чтобы ссылка и комментарий были на одной линии */
-        justify-content: space-between; /* ссылка слева, текст справа */
+        display: flex;
+        justify-content: space-between;
         align-items: center;
         padding: 0.5rem 1rem;
         border-radius: 8px;
