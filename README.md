@@ -9,7 +9,7 @@ BookReview is a web application for viewing books, assigning ratings, and writin
 - MySQL
 - Docker
 
-##⚙️ Running the Project
+## ⚙️ Running the Project
 Backend:
   cd backend
   ./mvnw spring-boot:run
