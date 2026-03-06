@@ -29,11 +29,11 @@ BookReview is a web application for viewing books, assigning ratings, and writin
 
 ## ⚙️ Running the Project
 - Backend:
-  1. cd backend
-  2. ./mvnw spring-boot:run
+  1.cd backend
+  2../mvnw spring-boot:run
 - Frontend:
-  - cd frontend
-  - npm install
-  - ng serve
+  1.cd frontend
+  2.npm install
+  3.ng serve
 - Docker:
   - docker compose up --build
