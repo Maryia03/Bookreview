@@ -29,8 +29,8 @@ BookReview is a web application for viewing books, assigning ratings, and writin
 
 ## ⚙️ Running the Project
 - Backend:
-  - cd backend
-  - ./mvnw spring-boot:run
+  1. cd backend
+  2. ./mvnw spring-boot:run
 - Frontend:
   - cd frontend
   - npm install
