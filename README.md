@@ -26,7 +26,6 @@ BookReview is a web application for viewing books, assigning ratings, and writin
   - Delete books
   - Delete any comment
   - Block / unblock users
-  - Moderate comments using a dropdown menu
 
 ## ⚙️ Running the Project
 - Backend:
