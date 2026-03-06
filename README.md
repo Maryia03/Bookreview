@@ -9,6 +9,25 @@ BookReview is a web application for viewing books, assigning ratings, and writin
 - MySQL
 - Docker
 
+## 🧑‍💻 Features
+- User:
+  - Register and log in
+  - Browse books
+  - View book pages
+  - Rate books (0.5 – 10 scale)
+  - Write comments
+  - Like / dislike comments
+  - View personal profile
+  - Edit profile (username, avatar)
+  - Viewing personal ratings and comments
+- Admin:
+- Create books
+- Edit books
+- Delete books
+- Delete any comment
+- Block / unblock users
+- Moderate comments using a dropdown menu
+
 ## ⚙️ Running the Project
 - Backend:
   - cd backend
