@@ -1,4 +1,4 @@
-# bookreview
+# Bookreview
 BookReview is a web application for viewing books, assigning ratings, and writing comments. Users can rate books, discuss them in comments, and view other users ratings.
 
 ## 🛠️ Technologies
