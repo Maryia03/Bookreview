@@ -109,7 +109,7 @@ public class BookService {
                 .author(book.getAuthor())
                 .description(book.getDescription())
                 .coverUrl(book.getCoverUrl())
-                .averageRating(roundedAverage.doubleValue()) // для DTO как Double
+                .averageRating(roundedAverage.doubleValue())
                 .ratingsCount(count)
                 .build();
     }
