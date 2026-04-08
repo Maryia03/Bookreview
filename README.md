@@ -36,4 +36,5 @@ BookReview is a web application for viewing books, assigning ratings, and writin
   - npm install
   - ng serve
 - Docker:
+  - cd backend
   - docker compose up --build
