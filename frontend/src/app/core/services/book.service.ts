@@ -71,8 +71,8 @@ export class BookService {
     return this.http.post<any>(`http://localhost:8080/api/comments/${commentId}/dislike`, {});
   }
 
-  searchBooks(query: string): Observable<any[]>{
+  searchBooks(query: string): Observable<any[]> {
     if (!query.trim()) return this.getAllBooks();
-    return this.http.get<any[]>(`${this.api}/books?search=${encodeURIComponent(query)}`);
+    return this.http.get<any[]>(`${this.api}/books/search?query=${encodeURIComponent(query)}`);
   }
 }

@@ -28,7 +28,11 @@ export class HomeComponent implements OnInit{
     });
   }
 
-  onSearch(){
+  onSearch() {
+    if (!this.search.trim()) {
+      this.loadBooks();
+      return;
+    }
     this.bookService.searchBooks(this.search).subscribe(data => {
       this.books = data;
       this.cdr.detectChanges();

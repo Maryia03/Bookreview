@@ -48,17 +48,17 @@
       }
     }
 
- .delete-btn {
-   padding: 0.6rem 1.2rem;
-   border-radius: 12px;
-   border: none;
-   background: #d32f2f;
-   color: white;
-   font-weight: 600;
-   cursor: pointer;
-   transition: all 0.2s;
+    .delete-btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      border: none;
+      background: #d32f2f;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
 
-      &:hover {
+     &:hover {
         background-color: #b71c1c;
         }
       }
