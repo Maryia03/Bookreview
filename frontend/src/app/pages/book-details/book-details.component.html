@@ -49,22 +49,49 @@
     </div>
 
     <div *ngFor="let comment of comments" class="comment">
-      <div class="comment-header">
-        <img class="comment-avatar" [src]="comment.avatarUrl || 'assets/no-avatar.png'" alt="User avatar">
-        <strong><a [routerLink]="['/user', comment.userId]">{{ comment.username }}</a></strong>
-        <div *ngIf="user?.role === 'ROLE_ADMIN'" class="comment-menu" (click)="$event.stopPropagation()">
-          <button class="dots" (click)="toggleMenu(comment.id)">⋮</button>
-          <div class="menu-dropdown" *ngIf="activeMenuCommentId === comment.id">
-            <button (click)="deleteComment(comment.id)">Delete</button>
-            <button (click)="blockUser(comment.userId)">Block user</button>
+      <div class="comment-row">
+        <img class="comment-avatar"
+             [src]="comment.avatarUrl || 'assets/no-avatar.png'"
+             alt="User avatar">
+        <div class="comment-body">
+          <div class="comment-header">
+            <strong>
+              <a [routerLink]="['/user', comment.userId]">
+                {{ comment.username }}
+              </a>
+            </strong>
+
+            <span class="user-rating" *ngIf="comment.rating !== null && comment.rating !== undefined">
+                  {{ comment.rating % 1 === 0 ? comment.rating : (comment.rating | number:'1.1-1') }}
+              <span class="star">★</span>
+                </span>
+
+            <span class="comment-date">
+          {{ comment.createdDate | date:'dd.MM.yyyy' }}
+        </span>
+
+            <div *ngIf="user?.role === 'ROLE_ADMIN'"
+                 class="comment-menu"
+                 (click)="$event.stopPropagation()">
+              <button class="dots" (click)="toggleMenu(comment.id)">⋮</button>
+              <div class="menu-dropdown" *ngIf="activeMenuCommentId === comment.id">
+                <button (click)="deleteComment(comment.id)">Delete</button>
+                <button (click)="blockUser(comment.userId)">Block user</button>
+              </div>
+            </div>
+          </div>
+          <p class="comment-text">{{ comment.content }}</p>
+          <div class="reactions">
+        <span [class.active]="comment.userReaction==='like'"
+              (click)="!user?.blocked && likeComment(comment)">
+          👍 {{ comment.likesCount }}
+        </span>
+            <span [class.active]="comment.userReaction==='dislike'"
+                  (click)="!user?.blocked && dislikeComment(comment)">
+          👎 {{ comment.dislikesCount }}
+        </span>
           </div>
         </div>
-      </div>
-      <p>{{ comment.content }}</p>
-
-      <div class="reactions">
-        <span [class.active]="comment.userReaction==='like'" (click)="!user?.blocked && likeComment(comment)">👍 {{ comment.likesCount }}</span>
-        <span [class.active]="comment.userReaction==='dislike'" (click)="!user?.blocked && dislikeComment(comment)">👎 {{ comment.dislikesCount }}</span>
       </div>
     </div>
     <button *ngIf="book.totalPages > 1 && page < book.totalPages - 1" (click)="loadMore()">Load more</button>

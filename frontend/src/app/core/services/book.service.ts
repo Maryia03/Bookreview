@@ -13,6 +13,8 @@ export interface CommentDTO {
     userReaction: string | null;
     bookId: number;
     bookTitle: string;
+    createdDate: string;
+    rating?: number;
 }
 
 export interface BookDetails{
