@@ -6,11 +6,14 @@ import com.example.bookreview.models.User;
 import com.example.bookreview.models.DTO.CommentDTO;
 import com.example.bookreview.repositories.CommentRepository;
 import com.example.bookreview.repositories.CommentReactionRepository;
+import com.example.bookreview.repositories.RatingRepository;
+import com.example.bookreview.models.Rating;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -19,6 +22,7 @@ import java.util.List;
 public class CommentService{
     private final CommentRepository commentRepository;
     private final CommentReactionRepository reactionRepository;
+    private final RatingRepository ratingRepository;
 
     public CommentDTO addComment(User user, Book book, String content){
         if (user.isBlocked()){
@@ -102,6 +106,11 @@ public class CommentService{
                     .orElse(null);
         }
 
+        BigDecimal rating = ratingRepository
+                .findByUserAndBook(comment.getUser(), comment.getBook())
+                .map(Rating::getScore)
+                .orElse(null);
+
         return CommentDTO.builder()
                 .id(comment.getId())
                 .content(comment.getContent())
@@ -114,6 +123,7 @@ public class CommentService{
                 .likesCount(likes)
                 .dislikesCount(dislikes)
                 .userReaction(userReaction)
+                .rating(rating)
                 .build();
     }
 }

@@ -2,6 +2,7 @@ package com.example.bookreview.models.DTO;
 
 import lombok.*;
 import java.time.LocalDate;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -20,4 +21,5 @@ public class CommentDTO{
     private String userReaction;
     private Long bookId;
     private String bookTitle;
+    private BigDecimal rating;
 }
